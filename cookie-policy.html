@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Policy — Nexvantaq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #020408;
+  --deep: #050c14;
+  --surface: #0a1628;
+  --card: #0d1f35;
+  --border: rgba(0,200,255,0.12);
+  --border-bright: rgba(0,200,255,0.3);
+  --cyan: #00c8ff;
+  --cyan-dim: rgba(0,200,255,0.6);
+  --cyan-glow: rgba(0,200,255,0.15);
+  --white: #f0f8ff;
+  --white-dim: rgba(240,248,255,0.6);
+  --white-faint: rgba(240,248,255,0.25);
+  --green: #00ff88;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px); background-size: 80px 80px; pointer-events: none; z-index: 0; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; background: rgba(2,4,8,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: var(--font-display); font-size: 20px; font-weight: 800; letter-spacing: 0.15em; color: var(--white); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.nav-logo span { color: var(--cyan); }
+.nav-logo-mark { width: 32px; height: 32px; border: 1.5px solid var(--cyan); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--cyan); position: relative; }
+.nav-logo-mark::before { content: ''; position: absolute; inset: 3px; background: var(--cyan-glow); }
+.nav-back { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 24px; background: transparent; border: 1px solid var(--border-bright); color: var(--white-dim); text-decoration: none; transition: all 0.2s; }
+.nav-back:hover { border-color: var(--cyan); color: var(--cyan); }
+.page-hero { padding: 160px 48px 80px; position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+.page-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); border: 1px solid var(--border-bright); padding: 6px 16px; margin-bottom: 32px; display: inline-block; }
+.page-hero h1 { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 20px; }
+.page-hero .updated { font-family: var(--font-mono); font-size: 11px; color: var(--white-faint); letter-spacing: 0.1em; }
+.policy-body { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
+.policy-section { margin-bottom: 56px; }
+.policy-section h2 { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--cyan); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.policy-section h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--white); margin: 28px 0 12px; }
+.policy-section p { font-size: 15px; color: var(--white-dim); line-height: 1.8; margin-bottom: 16px; }
+.policy-section ul { padding-left: 24px; margin-bottom: 16px; }
+.policy-section li { font-size: 15px; color: var(--white-dim); line-height: 1.8; margin-bottom: 8px; }
+.policy-section a { color: var(--cyan); text-decoration: none; }
+.policy-section a:hover { text-decoration: underline; }
+.policy-section strong { color: var(--white); }
+.cookie-type { background: var(--surface); border: 1px solid var(--border); padding: 24px 28px; margin-bottom: 16px; border-left: 3px solid var(--cyan); }
+.cookie-type h4 { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.cookie-type p { margin: 0; font-size: 14px; }
+footer { background: var(--deep); border-top: 1px solid var(--border); padding: 48px; position: relative; z-index: 1; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+.footer-copy { font-family: var(--font-mono); font-size: 11px; color: var(--white-faint); letter-spacing: 0.08em; }
+.footer-links { display: flex; gap: 24px; list-style: none; }
+.footer-links a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-faint); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--cyan); }
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .page-hero { padding: 120px 24px 60px; }
+  .policy-body { padding: 0 24px 80px; }
+  footer { padding: 32px 24px; }
+  .footer-inner { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">N</div>
+    NEX<span>VANTAQ</span>
+  </a>
+  <a href="index.html" class="nav-back">← Back to Site</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">// Legal</div>
+  <h1>Cookie Policy</h1>
+  <p class="updated">Last updated: April 03, 2026</p>
+</div>
+
+<div class="policy-body">
+
+  <div class="policy-section">
+    <p>This Cookie Policy explains how <strong>Nexvantaq</strong> ("we," "us," or "our") uses cookies and similar tracking technologies when you visit our website at <a href="https://nexvantaq.com" target="_blank">https://nexvantaq.com</a>.</p>
+    <p>By using our website, you consent to the use of cookies in accordance with this Cookie Policy. If you do not agree to our use of cookies, you can adjust your browser settings to refuse cookies.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>What Are Cookies?</h2>
+    <p>Cookies are small text files that are placed on your computer or device when you visit a website. They are widely used to make websites work, or work more efficiently, as well as to provide information to the owners of the site.</p>
+    <p>Cookies can be "persistent" cookies (which remain on your device for a set period of time) or "session" cookies (which expire when you close your browser).</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>Types of Cookies We Use</h2>
+
+    <div class="cookie-type">
+      <h4>Strictly Necessary Cookies</h4>
+      <p>These cookies are essential for the website to function properly. They enable core functionality such as security, network management, and accessibility. You cannot opt out of these cookies.</p>
+    </div>
+
+    <div class="cookie-type">
+      <h4>Performance and Analytics Cookies</h4>
+      <p>These cookies collect information about how visitors use our website, for instance which pages visitors go to most often, and if they get error messages from web pages. We use Google Analytics for this purpose. All information these cookies collect is aggregated and anonymous.</p>
+    </div>
+
+    <div class="cookie-type">
+      <h4>Functionality Cookies</h4>
+      <p>These cookies allow the website to remember choices you make (such as your preferred language) and provide enhanced, more personal features. They may also be used to provide services you have asked for.</p>
+    </div>
+
+    <div class="cookie-type">
+      <h4>Targeting and Advertising Cookies</h4>
+      <p>These cookies are used to deliver adverts more relevant to you and your interests. They are also used to limit the number of times you see an advertisement as well as help measure the effectiveness of advertising campaigns.</p>
+    </div>
+  </div>
+
+  <div class="policy-section">
+    <h2>Third-Party Cookies</h2>
+    <p>In addition to our own cookies, we may also use various third-party cookies to report usage statistics of the Service and deliver advertisements on and through the Service. The following third parties may place cookies on your device:</p>
+    <ul>
+      <li><strong>Google Analytics</strong> — for website analytics and performance tracking</li>
+      <li><strong>Calendly</strong> — for booking and scheduling functionality</li>
+      <li><strong>Beehiiv</strong> — for newsletter subscription functionality</li>
+      <li><strong>Stripe</strong> — for payment processing functionality</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>How to Control Cookies</h2>
+    <p>You can control and/or delete cookies as you wish. You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. However, if you do this, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.</p>
+    <p>Most web browsers allow some control of most cookies through the browser settings. To find out more about cookies, including how to see what cookies have been set, visit <a href="https://www.aboutcookies.org" target="_blank">www.aboutcookies.org</a>.</p>
+
+    <h3>Browser-Specific Instructions</h3>
+    <ul>
+      <li><strong>Google Chrome:</strong> Settings → Privacy and security → Cookies and other site data</li>
+      <li><strong>Mozilla Firefox:</strong> Options → Privacy & Security → Cookies and Site Data</li>
+      <li><strong>Safari:</strong> Preferences → Privacy → Manage Website Data</li>
+      <li><strong>Microsoft Edge:</strong> Settings → Cookies and site permissions → Cookies and data stored</li>
+    </ul>
+
+    <h3>Opt Out of Google Analytics</h3>
+    <p>To opt out of being tracked by Google Analytics across all websites, visit: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">https://tools.google.com/dlpage/gaoptout</a></p>
+  </div>
+
+  <div class="policy-section">
+    <h2>Updates to This Policy</h2>
+    <p>We may update this Cookie Policy from time to time to reflect changes in technology, legislation, our operations, or for other reasons. Any changes will become effective when we post the revised Cookie Policy on our website. We encourage you to periodically review this page for the latest information on our cookie practices.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>Contact Us</h2>
+    <p>If you have any questions about our use of cookies or this Cookie Policy, please contact us:</p>
+    <ul>
+      <li>Email: <a href="mailto:hello@nexvantaq.com">hello@nexvantaq.com</a></li>
+      <li>Website: <a href="https://nexvantaq.com/#contact">https://nexvantaq.com/#contact</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Nexvantaq. All rights reserved.</div>
+    <ul class="footer-links">
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="cookie-policy.html">Cookie Policy</a></li>
+      <li><a href="mailto:hello@nexvantaq.com">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

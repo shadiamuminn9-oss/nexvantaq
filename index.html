@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexvantaq — The AI Operating System for Your Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #00000a;
+  --abyss: #020510;
+  --deep: #030818;
+  --surface: #050f28;
+  --glass: rgba(5,15,40,0.7);
+  --plasma: #00ffcc;
+  --plasma-dim: rgba(0,255,204,0.5);
+  --plasma-glow: rgba(0,255,204,0.12);
+  --plasma-trace: rgba(0,255,204,0.06);
+  --nova: #7c3aff;
+  --nova-bright: #a855f7;
+  --nova-glow: rgba(124,58,255,0.2);
+  --ice: #00d4ff;
+  --white: #e8f4ff;
+  --white-dim: rgba(232,244,255,0.55);
+  --white-ghost: rgba(232,244,255,0.15);
+  --border: rgba(0,255,204,0.08);
+  --border-lit: rgba(0,255,204,0.25);
+  --font-hud: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-data: 'Share Tech Mono', monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white);font-family:var(--font-body);overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:8px;height:8px;background:var(--plasma);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform 0.1s;box-shadow:0 0 10px var(--plasma),0 0 20px var(--plasma-dim)}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--plasma-dim);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all 0.15s ease}
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:0.6}
+.scanlines{position:fixed;inset:0;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,204,0.015) 3px,rgba(0,255,204,0.015) 4px);pointer-events:none}
+.vignette{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,10,0.85) 100%);pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,10,0.7);backdrop-filter:blur(24px);border-bottom:1px solid var(--border-lit)}
+nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--plasma),var(--nova-bright),var(--plasma),transparent);animation:nav-glow 4s linear infinite;background-size:200%}
+@keyframes nav-glow{0%{background-position:-100%}100%{background-position:200%}}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-hex{width:40px;height:40px;position:relative;display:flex;align-items:center;justify-content:center}
+.logo-hex svg{position:absolute;width:100%;height:100%;animation:hex-pulse 3s ease-in-out infinite}
+@keyframes hex-pulse{0%,100%{filter:drop-shadow(0 0 4px var(--plasma))}50%{filter:drop-shadow(0 0 14px var(--plasma))}}
+.logo-letter{font-family:var(--font-hud);font-size:14px;font-weight:900;color:var(--plasma);z-index:1}
+.logo-text{font-family:var(--font-hud);font-size:15px;font-weight:700;letter-spacing:0.2em;color:var(--white)}
+.logo-text em{color:var(--plasma);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-family:var(--font-data);font-size:11px;letter-spacing:0.15em;color:var(--white-dim);text-decoration:none;text-transform:uppercase;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--plasma);transform:scaleX(0);transition:transform 0.3s}
+.nav-links a:hover{color:var(--plasma)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{font-family:var(--font-data);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:10px 28px;background:transparent;border:1px solid var(--plasma);color:var(--plasma);text-decoration:none;position:relative;overflow:hidden;transition:color 0.3s}
+.nav-cta::before{content:'';position:absolute;inset:0;background:var(--plasma);transform:translateX(-101%);transition:transform 0.3s ease}
+.nav-cta:hover::before{transform:translateX(0)}
+.nav-cta:hover{color:var(--void)}
+.nav-cta span{position:relative;z-index:1}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 48px 80px;position:relative;z-index:10;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-data);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--plasma);border:1px solid var(--border-lit);padding:8px 20px;margin-bottom:48px;background:var(--plasma-trace)}
+.badge-dot{width:5px;height:5px;background:var(--plasma);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero-title{font-family:var(--font-hud);font-size:clamp(32px,5.5vw,78px);font-weight:900;line-height:1.05;max-width:1000px;margin-bottom:32px}
+.hero-title .t1{display:block;color:var(--white-ghost);font-size:0.55em;letter-spacing:0.05em;font-weight:400;margin-bottom:12px}
+.hero-title .t2{display:block;background:linear-gradient(135deg,var(--plasma) 0%,var(--ice) 40%,var(--nova-bright) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:grad 6s ease-in-out infinite;background-size:200%}
+.hero-title .t3{display:block;color:var(--white-dim);font-size:0.5em;font-weight:400;letter-spacing:0.08em;margin-top:12px}
+@keyframes grad{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-sub{font-family:var(--font-body);font-size:18px;font-weight:300;color:var(--white-dim);max-width:580px;line-height:1.8;margin-bottom:56px;letter-spacing:0.03em}
+.hero-actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:72px}
+.btn-prime{font-family:var(--font-hud);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:18px 44px;background:linear-gradient(135deg,var(--plasma),var(--ice));color:var(--void);text-decoration:none;position:relative;overflow:hidden;transition:all 0.3s;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)}
+.btn-prime::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,white,var(--plasma));opacity:0;transition:opacity 0.3s}
+.btn-prime:hover::after{opacity:1}
+.btn-prime span{position:relative;z-index:1}
+.btn-ghost{font-family:var(--font-hud);font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:17px 44px;background:transparent;border:1px solid var(--border-lit);color:var(--white-dim);text-decoration:none;transition:all 0.3s;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)}
+.btn-ghost:hover{border-color:var(--plasma);color:var(--plasma);background:var(--plasma-trace);box-shadow:0 0 30px var(--plasma-glow)}
+.hero-stats{display:flex;border:1px solid var(--border-lit);background:var(--glass);backdrop-filter:blur(12px)}
+.hstat{padding:20px 32px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:var(--font-hud);font-size:24px;font-weight:900;color:var(--plasma);text-shadow:0 0 20px var(--plasma-dim)}
+.hstat-l{font-family:var(--font-data);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-ghost)}
+
+/* DATA STREAM */
+.data-bar{background:var(--void);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:10;height:36px;display:flex;align-items:center;overflow:hidden}
+.data-stream{display:flex;animation:stream 22s linear infinite;white-space:nowrap}
+.data-item{font-family:var(--font-data);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-ghost);padding:0 32px;border-right:1px solid var(--border)}
+.data-item em{color:var(--plasma);font-style:normal}
+@keyframes stream{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+.section-wrap{position:relative;z-index:10;padding:120px 48px}
+.section-inner{max-width:1280px;margin:0 auto}
+.sec-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.sec-line{width:40px;height:1px;background:linear-gradient(90deg,var(--plasma),transparent)}
+.sec-tag{font-family:var(--font-data);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--plasma)}
+.sec-title{font-family:var(--font-hud);font-size:clamp(26px,3.5vw,50px);font-weight:800;line-height:1.1;margin-bottom:16px}
+.sec-title .hl{background:linear-gradient(90deg,var(--plasma),var(--nova-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:16px;color:var(--white-dim);line-height:1.7;max-width:560px;font-weight:300}
+
+/* TRANSFORM */
+.transform-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:64px;background:var(--border-lit)}
+.tx-panel{background:var(--abyss);padding:52px;position:relative;overflow:hidden}
+.tx-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.tx-panel.before::before{background:linear-gradient(90deg,transparent,#ff3355,transparent)}
+.tx-panel.after::before{background:linear-gradient(90deg,transparent,var(--plasma),transparent)}
+.tx-label{font-family:var(--font-data);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:36px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.tx-panel.before .tx-label{color:#ff3355}
+.tx-panel.after .tx-label{color:var(--plasma)}
+.tx-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+.tx-bullet{width:14px;height:14px;border:1px solid #ff3355;flex-shrink:0;margin-top:3px;transform:rotate(45deg);position:relative}
+.tx-bullet::after{content:'';position:absolute;inset:3px;background:rgba(255,51,85,0.3)}
+.tx-text{font-size:15px;color:var(--white-dim);line-height:1.6;font-weight:400}
+.tx-metric{margin-bottom:24px;padding:18px 22px;background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.12)}
+.tx-m-label{font-family:var(--font-data);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-ghost);margin-bottom:6px}
+.tx-m-val{font-family:var(--font-hud);font-size:34px;font-weight:900;color:var(--plasma);text-shadow:0 0 30px var(--plasma-dim);animation:num-glow 3s ease-in-out infinite}
+.tx-m-val.red{color:#ff3355;text-shadow:0 0 30px rgba(255,51,85,0.4)}
+@keyframes num-glow{0%,100%{text-shadow:0 0 20px var(--plasma-dim)}50%{text-shadow:0 0 40px var(--plasma),0 0 60px var(--plasma-dim)}}
+.hud-corner{position:absolute;top:20px;right:20px;font-family:var(--font-data);font-size:8px;color:var(--plasma-dim);letter-spacing:0.1em;text-align:right;opacity:0.5}
+
+/* AGENTS */
+.agents-bg{background:var(--abyss);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:64px}
+.agent-card{background:var(--abyss);padding:40px;position:relative;overflow:hidden;transition:background 0.4s;cursor:pointer}
+.agent-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,var(--plasma-glow),transparent 60%);opacity:0;transition:opacity 0.4s}
+.agent-card:hover{background:var(--surface)}
+.agent-card:hover::before{opacity:1}
+.agent-corner-tl{position:absolute;top:0;left:0;width:20px;height:20px;border-top:2px solid var(--plasma);border-left:2px solid var(--plasma);opacity:0;transition:opacity 0.3s}
+.agent-corner-br{position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--nova-bright);border-right:2px solid var(--nova-bright);opacity:0;transition:opacity 0.3s 0.05s}
+.agent-card:hover .agent-corner-tl,.agent-card:hover .agent-corner-br{opacity:1}
+.agent-id{font-family:var(--font-data);font-size:9px;letter-spacing:0.25em;color:var(--plasma-dim);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.agent-id::before{content:'';width:20px;height:1px;background:var(--plasma-dim)}
+.agent-icon{width:44px;height:44px;margin-bottom:18px}
+.agent-icon svg{width:100%;height:100%;transition:filter 0.3s}
+.agent-card:hover .agent-icon svg{filter:drop-shadow(0 0 8px var(--plasma))}
+.agent-name{font-family:var(--font-hud);font-size:17px;font-weight:700;margin-bottom:12px;color:var(--white);letter-spacing:0.05em;transition:color 0.3s}
+.agent-card:hover .agent-name{color:var(--plasma)}
+.agent-desc{font-size:14px;color:var(--white-dim);line-height:1.7;font-weight:300}
+
+/* MARKETPLACE */
+.market-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);margin-top:64px}
+.market-card{background:var(--abyss);padding:28px 20px;text-align:center;position:relative;overflow:hidden;transition:background 0.3s}
+.market-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--nova),var(--plasma));transform:scaleX(0);transition:transform 0.3s}
+.market-card:hover{background:var(--surface)}
+.market-card:hover::before{transform:scaleX(1)}
+.market-name{font-family:var(--font-hud);font-size:12px;font-weight:600;color:var(--white);margin-bottom:14px;line-height:1.4;letter-spacing:0.03em}
+.market-price{font-family:var(--font-data);font-size:20px;font-weight:700;color:var(--plasma);text-shadow:0 0 12px var(--plasma-dim)}
+.market-price sub{font-size:9px;color:var(--white-ghost);letter-spacing:0.1em}
+
+/* NEWSLETTER */
+.nl-bg{background:var(--abyss);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.nl-bg::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,var(--nova-glow) 0%,transparent 70%);pointer-events:none}
+.nl-inner{max-width:720px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.nl-editions{display:flex;justify-content:center;gap:16px;margin:40px 0;flex-wrap:wrap}
+.nl-pill{font-family:var(--font-data);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--border-lit);color:var(--plasma-dim);background:var(--plasma-trace);transition:all 0.3s}
+.nl-pill:hover{border-color:var(--plasma);color:var(--plasma);box-shadow:0 0 20px var(--plasma-glow)}
+.nl-form{display:flex;max-width:520px;margin:40px auto 0}
+.nl-input{flex:1;background:var(--surface);border:1px solid var(--border-lit);border-right:none;padding:16px 22px;font-family:var(--font-body);font-size:15px;color:var(--white);outline:none;transition:border-color 0.3s}
+.nl-input::placeholder{color:var(--white-ghost)}
+.nl-input:focus{border-color:var(--plasma)}
+.nl-btn{font-family:var(--font-hud);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:16px 28px;background:var(--plasma);border:none;color:var(--void);cursor:pointer;transition:all 0.3s;white-space:nowrap}
+.nl-btn:hover{background:white;box-shadow:0 0 30px var(--plasma-dim)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;margin-top:64px}
+.contact-info{display:flex;flex-direction:column;gap:40px}
+.ci-item{display:flex;flex-direction:column;gap:8px}
+.ci-label{font-family:var(--font-data);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--plasma)}
+.ci-value{font-size:16px;color:var(--white-dim);text-decoration:none;font-weight:400;transition:color 0.2s}
+.ci-value:hover{color:var(--plasma)}
+.social-grid{display:flex;gap:10px;flex-wrap:wrap}
+.social-btn{font-family:var(--font-data);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 16px;border:1px solid var(--border);color:var(--white-dim);text-decoration:none;transition:all 0.3s;position:relative;overflow:hidden}
+.social-btn::before{content:'';position:absolute;inset:0;background:var(--plasma-trace);transform:translateY(100%);transition:transform 0.3s}
+.social-btn:hover{border-color:var(--plasma);color:var(--plasma)}
+.social-btn:hover::before{transform:translateY(0)}
+.social-btn span{position:relative;z-index:1}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:flex;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:8px;flex:1}
+.form-label{font-family:var(--font-data);font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--white-ghost)}
+.form-ctrl{background:var(--surface);border:1px solid var(--border);padding:14px 18px;font-family:var(--font-body);font-size:15px;color:var(--white);outline:none;transition:all 0.3s;width:100%}
+.form-ctrl:focus{border-color:var(--plasma);background:rgba(0,255,204,0.03);box-shadow:0 0 20px var(--plasma-trace)}
+.form-ctrl::placeholder{color:var(--white-ghost)}
+textarea.form-ctrl{resize:vertical;min-height:120px}
+select.form-ctrl{appearance:none;cursor:pointer}
+.form-submit{font-family:var(--font-hud);font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:18px;background:transparent;border:1px solid var(--plasma);color:var(--plasma);cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;margin-top:8px}
+.form-submit::before{content:'';position:absolute;inset:0;background:var(--plasma);transform:translateY(101%);transition:transform 0.3s ease}
+.form-submit:hover::before{transform:translateY(0)}
+.form-submit:hover{color:var(--void)}
+.form-submit span{position:relative;z-index:1}
+
+/* FOOTER */
+footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40px 48px;position:relative;z-index:10}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.footer-copy{font-family:var(--font-data);font-size:10px;color:var(--white-ghost);letter-spacing:0.1em}
+.footer-links{display:flex;gap:28px;list-style:none}
+.footer-links a{font-family:var(--font-data);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-ghost);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--plasma)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.market-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .hero{padding:100px 24px 60px}
+  .section-wrap{padding:80px 24px}
+  .transform-grid,.contact-grid{grid-template-columns:1fr}
+  .agents-grid{grid-template-columns:1fr 1fr}
+  .market-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-stats{flex-wrap:wrap}
+  footer{padding:32px 24px}
+  .footer-inner{flex-direction:column;gap:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-hex">
+      <svg viewBox="0 0 40 40" fill="none"><polygon points="20,2 36,11 36,29 20,38 4,29 4,11" stroke="#00ffcc" stroke-width="1.5" fill="rgba(0,255,204,0.05)"/><polygon points="20,8 32,15 32,25 20,32 8,25 8,15" stroke="#00ffcc" stroke-width="0.5" fill="none" opacity="0.4"/></svg>
+      <span class="logo-letter">N</span>
+    </div>
+    <span class="logo-text">NEX<em>VANTAQ</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#agents">Agents</a></li>
+    <li><a href="#marketplace">Marketplace</a></li>
+    <li><a href="#newsletter">Brief</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00" target="_blank" class="nav-cta"><span>Book a Call</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><div class="badge-dot"></div>AI Automation Agency &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; Operating Globally</div>
+  <h1 class="hero-title">
+    <span class="t1">Your receptionist. Your leads. Your content. Your operations.</span>
+    <span class="t2">NOW RUNNING ON AI.</span>
+    <span class="t3">The Intelligence Layer Your Business Has Been Waiting For</span>
+  </h1>
+  <p class="hero-sub">Nexvantaq deploys intelligent AI agents built specifically for your business. Book a free 20-minute strategy call to see what yours looks like.</p>
+  <div class="hero-actions">
+    <a href="https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00" target="_blank" class="btn-prime"><span>See Your Business Automated</span></a>
+    <a href="#agents" class="btn-ghost">Explore the System</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">9</div><div class="hstat-l">AI Agents</div></div>
+    <div class="hstat"><div class="hstat-n">9</div><div class="hstat-l">Industry Verticals</div></div>
+    <div class="hstat"><div class="hstat-n">24/7</div><div class="hstat-l">Always Running</div></div>
+    <div class="hstat"><div class="hstat-n">10</div><div class="hstat-l">Marketplace Agents</div></div>
+    <div class="hstat"><div class="hstat-n">3×</div><div class="hstat-l">Daily Newsletter</div></div>
+  </div>
+</section>
+
+<!-- DATA STREAM -->
+<div class="data-bar">
+  <div class="data-stream">
+    <div class="data-item">System: <em>Online</em></div><div class="data-item">Agents Active: <em>9/9</em></div><div class="data-item">Leads Today: <em>247</em></div><div class="data-item">Posts Published: <em>35</em></div><div class="data-item">Proposals Sent: <em>12</em></div><div class="data-item">Countries: <em>9+</em></div><div class="data-item">Uptime: <em>99.97%</em></div><div class="data-item">Intelligence: <em>Active</em></div>
+    <div class="data-item">System: <em>Online</em></div><div class="data-item">Agents Active: <em>9/9</em></div><div class="data-item">Leads Today: <em>247</em></div><div class="data-item">Posts Published: <em>35</em></div><div class="data-item">Proposals Sent: <em>12</em></div><div class="data-item">Countries: <em>9+</em></div><div class="data-item">Uptime: <em>99.97%</em></div><div class="data-item">Intelligence: <em>Active</em></div>
+  </div>
+</div>
+
+<!-- TRANSFORMATION -->
+<section class="section-wrap reveal">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">01 — The Transformation</div></div>
+    <h2 class="sec-title">Before Nexvantaq. After <span class="hl">Nexvantaq.</span></h2>
+    <div class="transform-grid">
+      <div class="tx-panel before">
+        <div class="hud-corner">STATUS: INEFFICIENT</div>
+        <div class="tx-label">— Before</div>
+        <div class="tx-item"><div class="tx-bullet"></div><div class="tx-text">Doing everything manually, drowning in repetitive tasks</div></div>
+        <div class="tx-item"><div class="tx-bullet"></div><div class="tx-text">Missing leads because there's no time to follow up</div></div>
+        <div class="tx-item"><div class="tx-bullet"></div><div class="tx-text">Inconsistent or no content presence online</div></div>
+        <div class="tx-item"><div class="tx-bullet"></div><div class="tx-text">No outreach, no pipeline, no system</div></div>
+        <div class="tx-item"><div class="tx-bullet"></div><div class="tx-text">Chasing clients, writing proposals by hand</div></div>
+      </div>
+      <div class="tx-panel after">
+        <div class="hud-corner">STATUS: OPTIMISED</div>
+        <div class="tx-label">+ After</div>
+        <div class="tx-metric"><div class="tx-m-label">Leads Found This Week</div><div class="tx-m-val">47</div></div>
+        <div class="tx-metric"><div class="tx-m-label">Social Posts Published</div><div class="tx-m-val">35</div></div>
+        <div class="tx-metric"><div class="tx-m-label">Calls Booked</div><div class="tx-m-val">8</div></div>
+        <div class="tx-metric"><div class="tx-m-label">Manual Work Done</div><div class="tx-m-val red">Zero.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section class="section-wrap agents-bg reveal" id="agents">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">02 — The System</div></div>
+    <h2 class="sec-title">9 agents. One operating system.<br><span class="hl">Built for your business.</span></h2>
+    <p class="sec-sub">Each agent is a specialist. Together they form an unstoppable autonomous intelligence layer for your entire operation.</p>
+    <div class="agents-grid">
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">01 — COMMAND</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#00ffcc" stroke-width="1"/><circle cx="24" cy="24" r="8" stroke="#00ffcc" stroke-width="1.5" fill="rgba(0,255,204,0.1)"/><line x1="24" y1="4" x2="24" y2="16" stroke="#00ffcc" stroke-width="1"/><line x1="24" y1="32" x2="24" y2="44" stroke="#00ffcc" stroke-width="1"/><line x1="4" y1="24" x2="16" y2="24" stroke="#00ffcc" stroke-width="1"/><line x1="32" y1="24" x2="44" y2="24" stroke="#00ffcc" stroke-width="1"/></svg></div><div class="agent-name">Command</div><div class="agent-desc">Central intelligence. Routes every task to the right agent instantly and keeps the entire system coordinated 24/7.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">02 — HUNTER</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M8 40L22 26M22 26L30 34L44 8L18 22L22 26Z" stroke="#00ffcc" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="agent-name">Hunter</div><div class="agent-desc">Finds 20 new potential clients every day and sends personalised outreach automatically.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">03 — ARCHITECT</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" stroke="#00ffcc" stroke-width="1"/><rect x="14" y="14" width="20" height="20" stroke="#00ffcc" stroke-width="0.75" fill="rgba(0,255,204,0.05)"/><line x1="24" y1="8" x2="24" y2="40" stroke="#00ffcc" stroke-width="0.5" stroke-dasharray="2,2"/><line x1="8" y1="24" x2="40" y2="24" stroke="#00ffcc" stroke-width="0.5" stroke-dasharray="2,2"/></svg></div><div class="agent-name">Architect</div><div class="agent-desc">Builds bespoke transformation documents for every interested lead — tailored, compelling, automatic.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">04 — PUBLISHER</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" rx="1" stroke="#00ffcc" stroke-width="1"/><line x1="6" y1="18" x2="42" y2="18" stroke="#00ffcc" stroke-width="0.75"/><line x1="14" y1="24" x2="34" y2="24" stroke="#00ffcc" stroke-width="0.75"/><line x1="14" y1="30" x2="28" y2="30" stroke="#00ffcc" stroke-width="0.75"/><circle cx="36" cy="10" r="6" fill="#00ffcc" opacity="0.9"/></svg></div><div class="agent-name">Publisher</div><div class="agent-desc">Creates and posts daily content across all platforms and sends your newsletter three times a day.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">05 — CLOSER</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M10 38L24 10L38 38" stroke="#00ffcc" stroke-width="1.5"/><line x1="14" y1="30" x2="34" y2="30" stroke="#00ffcc" stroke-width="1"/><circle cx="24" cy="10" r="3" fill="#00ffcc"/></svg></div><div class="agent-name">Closer</div><div class="agent-desc">Generates proposals in 5 minutes and handles every conversion step automatically.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">06 — BUILDER</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="16" width="36" height="24" stroke="#00ffcc" stroke-width="1"/><line x1="6" y1="24" x2="42" y2="24" stroke="#00ffcc" stroke-width="0.75"/><line x1="16" y1="16" x2="16" y2="8" stroke="#00ffcc" stroke-width="1"/><line x1="32" y1="16" x2="32" y2="8" stroke="#00ffcc" stroke-width="1"/><line x1="8" y1="8" x2="40" y2="8" stroke="#00ffcc" stroke-width="1"/></svg></div><div class="agent-name">Builder</div><div class="agent-desc">Builds complete websites and automations for your clients — end to end, on demand.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">07 — SENTINEL</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M24 6L40 12V24C40 33 24 42 24 42C24 42 8 33 8 24V12L24 6Z" stroke="#00ffcc" stroke-width="1.5" fill="rgba(0,255,204,0.05)"/><path d="M17 24L21 28L31 18" stroke="#00ffcc" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="agent-name">Sentinel</div><div class="agent-desc">Monitors every system 24/7 and sends weekly performance reports so nothing slips.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">08 — MARKETPLACE</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="36" height="24" stroke="#00ffcc" stroke-width="1"/><path d="M14 18V14C14 10 34 10 34 14V18" stroke="#00ffcc" stroke-width="1"/><line x1="24" y1="26" x2="24" y2="34" stroke="#00ffcc" stroke-width="1"/><line x1="20" y1="30" x2="28" y2="30" stroke="#00ffcc" stroke-width="1"/></svg></div><div class="agent-name">Marketplace</div><div class="agent-desc">Identifies and sells the right pre-built agent to every prospect based on their exact needs.</div></div>
+      <div class="agent-card"><div class="agent-corner-tl"></div><div class="agent-corner-br"></div><div class="agent-id">09 — OS BUILDER</div><div class="agent-icon"><svg viewBox="0 0 48 48" fill="none"><polygon points="24,4 44,14 44,34 24,44 4,34 4,14" stroke="#00ffcc" stroke-width="1.5" fill="rgba(0,255,204,0.05)"/><polygon points="24,14 34,19 34,29 24,34 14,29 14,19" stroke="#00ffcc" stroke-width="1" fill="rgba(0,255,204,0.08)"/><circle cx="24" cy="24" r="3" fill="#00ffcc"/></svg></div><div class="agent-name">OS Builder</div><div class="agent-desc">Deploys a complete industry-specific AI operating system for your business — fully configured, ready to run.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETPLACE -->
+<section class="section-wrap reveal" id="marketplace">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">03 — The Marketplace</div></div>
+    <h2 class="sec-title">Pre-built agents.<br><span class="hl">Deploy in minutes.</span></h2>
+    <p class="sec-sub">10 battle-tested agents ready to plug into your business today. One-time deployment, zero ongoing fees.</p>
+    <div class="market-grid">
+      <div class="market-card"><div class="market-name">The Receptionist</div><div class="market-price">$197<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Review Builder</div><div class="market-price">$147<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Lead Chaser</div><div class="market-price">$197<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Content Machine</div><div class="market-price">$247<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Proposal Writer</div><div class="market-price">$147<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Onboarding Concierge</div><div class="market-price">$197<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Reputation Monitor</div><div class="market-price">$127<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Email Nurture Builder</div><div class="market-price">$197<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Appointment Setter</div><div class="market-price">$197<sub>one-time</sub></div></div>
+      <div class="market-card"><div class="market-name">The Win-Back Agent</div><div class="market-price">$147<sub>one-time</sub></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section-wrap nl-bg reveal" id="newsletter">
+  <div class="nl-inner">
+    <div class="sec-eyebrow" style="justify-content:center"><div class="sec-line"></div><div class="sec-tag">04 — Daily Intelligence</div><div class="sec-line" style="transform:scaleX(-1)"></div></div>
+    <h2 class="sec-title" style="text-align:center">The <span class="hl">Nexvantaq Brief</span></h2>
+    <p style="color:var(--white-dim);font-size:16px;line-height:1.7;margin-top:16px;font-weight:300;text-align:center">Three editions daily. Join business owners in 9 countries reading it every day.</p>
+    <div class="nl-editions">
+      <div class="nl-pill">8AM — Macro Trends</div>
+      <div class="nl-pill">12PM — Tool Deep-Dive</div>
+      <div class="nl-pill">4PM — Market Alpha</div>
+    </div>
+    <div class="nl-form">
+      <input type="email" class="nl-input" placeholder="your@email.com" id="nl-email">
+      <button class="nl-btn" onclick="subscribeNewsletter()">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-wrap reveal" id="contact">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">05 — Get In Touch</div></div>
+    <h2 class="sec-title">Ready to automate<br><span class="hl">your business?</span></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="ci-item">
+          <div class="ci-label">Email</div>
+          <a href="mailto:hello@nexvantaq.com" class="ci-value">hello@nexvantaq.com</a>
+        </div>
+        <div class="ci-item">
+          <div class="ci-label">Book a Strategy Call</div>
+          <a href="https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00" target="_blank" class="ci-value">Free 20-minute strategy call →</a>
+        </div>
+        <div class="ci-item">
+          <div class="ci-label">Follow Us</div>
+          <div class="social-grid">
+            <a href="https://x.com/NEXVANTAQ" target="_blank" class="social-btn"><span>X</span></a>
+            <a href="https://www.instagram.com/nexvantaq/" target="_blank" class="social-btn"><span>Instagram</span></a>
+            <a href="https://www.tiktok.com/@nexvantaq" target="_blank" class="social-btn"><span>TikTok</span></a>
+            <a href="https://www.linkedin.com/feed" target="_blank" class="social-btn"><span>LinkedIn</span></a>
+            <a href="https://www.youtube.com/@NEXVANTAQ" target="_blank" class="social-btn"><span>YouTube</span></a>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-ctrl" placeholder="Your name" required></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-ctrl" placeholder="your@email.com" required></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Business Type</label>
+          <select class="form-ctrl">
+            <option value="" disabled selected>Select your industry</option>
+            <option>Dental Clinic</option><option>Real Estate Agency</option><option>Gym / Fitness Studio</option><option>Beauty Salon / Spa</option><option>Restaurant / Hospitality</option><option>Mortgage Broker</option><option>Recruitment Agency</option><option>Cleaning Company</option><option>Hotel</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-ctrl" placeholder="Tell us about your business and what you'd like to automate..."></textarea></div>
+        <button type="submit" class="form-submit"><span>Send Message →</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 NEXVANTAQ · All rights reserved · AI automation agency operating internationally</div>
+    <ul class="footer-links">
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="cookie-policy.html">Cookie Policy</a></li>
+      <li><a href="mailto:hello@nexvantaq.com">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// CUSTOM CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}animRing();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.transform='translate(-50%,-50%) scale(1.5)';ring.style.borderColor='var(--plasma)'});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='var(--plasma-dim)'});
+});
+
+// CANVAS BG
+const canvas=document.getElementById('bg-canvas'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+
+class Particle{
+  constructor(){this.reset()}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*1.5+.3;this.alpha=Math.random()*.5+.1;this.color=Math.random()>.7?'#7c3aff':'#00ffcc'}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset()}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1}
+}
+
+class GridLine{
+  constructor(h){this.h=h;this.reset()}
+  reset(){this.p=0;this.spd=Math.random()*.003+.001;this.pos=Math.random()*(this.h?H:W);this.alpha=Math.random()*.06+.02;this.w=Math.random()*.8+.2;this.color=Math.random()>.6?'#7c3aff':'#00ffcc'}
+  update(){this.p+=this.spd;if(this.p>1)this.reset()}
+  draw(){ctx.strokeStyle=this.color;ctx.lineWidth=this.w;ctx.globalAlpha=this.alpha*Math.sin(this.p*Math.PI);ctx.beginPath();if(this.h){ctx.moveTo(0,this.pos);ctx.lineTo(W*this.p,this.pos)}else{ctx.moveTo(this.pos,0);ctx.lineTo(this.pos,H*this.p)}ctx.stroke();ctx.globalAlpha=1}
+}
+
+const particles=[];for(let i=0;i<160;i++)particles.push(new Particle());
+const glines=[];for(let i=0;i<10;i++){glines.push(new GridLine(true));glines.push(new GridLine(false))}
+
+function drawHex(){
+  const s=70,cols=Math.ceil(W/(s*1.5))+2,rows=Math.ceil(H/(s*Math.sqrt(3)))+2;
+  for(let c=-1;c<cols;c++){for(let r=-1;r<rows;r++){
+    const x=c*s*1.5,y=r*s*Math.sqrt(3)+(c%2===0?0:s*Math.sqrt(3)/2);
+    ctx.beginPath();
+    for(let i=0;i<6;i++){const a=(i*60-30)*Math.PI/180;const px=x+s*.88*Math.cos(a),py=y+s*.88*Math.sin(a);i===0?ctx.moveTo(px,py):ctx.lineTo(px,py)}
+    ctx.closePath();ctx.strokeStyle='#00ffcc';ctx.lineWidth=.25;ctx.globalAlpha=.022;ctx.stroke();ctx.globalAlpha=1;
+  }}
+}
+
+function drawConns(){
+  for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){
+    const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<90){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle='#00ffcc';ctx.lineWidth=.3;ctx.globalAlpha=(1-d/90)*.1;ctx.stroke();ctx.globalAlpha=1}
+  }}
+}
+
+function animCanvas(){
+  ctx.clearRect(0,0,W,H);
+  drawHex();
+  glines.forEach(l=>{l.update();l.draw()});
+  drawConns();
+  particles.forEach(p=>{p.update();p.draw()});
+  requestAnimationFrame(animCanvas);
+}
+animCanvas();
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// AGENT STAGGER
+document.querySelectorAll('.agent-card').forEach((c,i)=>{c.style.opacity='0';c.style.transform='translateY(30px)';c.style.transition=`opacity 0.6s ease ${i*.07}s,transform 0.6s ease ${i*.07}s`});
+const agObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.agent-card').forEach(c=>{c.style.opacity='1';c.style.transform='translateY(0)'})}),{threshold:0.05});
+const ag=document.querySelector('.agents-grid');if(ag)agObs.observe(ag);
+
+// NEWSLETTER
+function subscribeNewsletter(){const e=document.getElementById('nl-email').value;if(!e)return;window.open('https://nexvantaq.beehiiv.com/subscribe?email='+encodeURIComponent(e),'_blank')}
+
+// FORM
+function submitForm(e){e.preventDefault();window.location.href='https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00'}
+</script>
+</body>
+</html>
