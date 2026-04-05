@@ -50,8 +50,8 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .logo-letter{font-family:var(--font-hud);font-size:14px;font-weight:900;color:var(--plasma);z-index:1}
 .logo-text{font-family:var(--font-hud);font-size:15px;font-weight:700;letter-spacing:0.2em;color:var(--white)}
 .logo-text em{color:var(--plasma);font-style:normal}
-.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
-.nav-links a{font-family:var(--font-data);font-size:11px;letter-spacing:0.15em;color:var(--white-dim);text-decoration:none;text-transform:uppercase;transition:color 0.2s;position:relative}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-family:var(--font-data);font-size:10px;letter-spacing:0.15em;color:var(--white-dim);text-decoration:none;text-transform:uppercase;transition:color 0.2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--plasma);transform:scaleX(0);transition:transform 0.3s}
 .nav-links a:hover{color:var(--plasma)}
 .nav-links a:hover::after{transform:scaleX(1)}
@@ -79,7 +79,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .btn-prime span{position:relative;z-index:1}
 .btn-ghost{font-family:var(--font-hud);font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:17px 44px;background:transparent;border:1px solid var(--border-lit);color:var(--white-dim);text-decoration:none;transition:all 0.3s;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)}
 .btn-ghost:hover{border-color:var(--plasma);color:var(--plasma);background:var(--plasma-trace);box-shadow:0 0 30px var(--plasma-glow)}
-.hero-stats{display:flex;border:1px solid var(--border-lit);background:var(--glass);backdrop-filter:blur(12px)}
+.hero-stats{display:flex;border:1px solid var(--border-lit);background:var(--glass);backdrop-filter:blur(12px);flex-wrap:wrap}
 .hstat{padding:20px 32px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px}
 .hstat:last-child{border-right:none}
 .hstat-n{font-family:var(--font-hud);font-size:24px;font-weight:900;color:var(--plasma);text-shadow:0 0 20px var(--plasma-dim)}
@@ -122,6 +122,14 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 @keyframes num-glow{0%,100%{text-shadow:0 0 20px var(--plasma-dim)}50%{text-shadow:0 0 40px var(--plasma),0 0 60px var(--plasma-dim)}}
 .hud-corner{position:absolute;top:20px;right:20px;font-family:var(--font-data);font-size:8px;color:var(--plasma-dim);letter-spacing:0.1em;text-align:right;opacity:0.5}
 
+/* TRUST BAR */
+.trust-bar{background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:10;padding:40px 48px}
+.trust-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.trust-item{background:var(--abyss);padding:32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.trust-icon{font-size:28px}
+.trust-title{font-family:var(--font-hud);font-size:13px;font-weight:700;color:var(--plasma);letter-spacing:0.05em}
+.trust-desc{font-family:var(--font-data);font-size:10px;color:var(--white-ghost);letter-spacing:0.08em;line-height:1.6}
+
 /* AGENTS */
 .agents-bg{background:var(--abyss);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:64px}
@@ -141,15 +149,99 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;backg
 .agent-card:hover .agent-name{color:var(--plasma)}
 .agent-desc{font-size:14px;color:var(--white-dim);line-height:1.7;font-weight:300}
 
+/* PACKAGES */
+.packages-bg{background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.packages-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-lit);margin-top:64px}
+.pkg-card{background:var(--abyss);padding:40px 32px;position:relative;overflow:hidden;transition:background 0.3s;display:flex;flex-direction:column}
+.pkg-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--plasma),transparent);transform:scaleX(0);transition:transform 0.4s}
+.pkg-card:hover{background:var(--surface)}
+.pkg-card:hover::after{transform:scaleX(1)}
+.pkg-card.featured{border:1px solid var(--border-lit)}
+.pkg-card.featured::after{transform:scaleX(1)}
+.pkg-popular{font-family:var(--font-data);font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--void);background:var(--plasma);padding:4px 12px;display:inline-block;margin-bottom:20px;width:fit-content}
+.pkg-name{font-family:var(--font-hud);font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px;letter-spacing:0.05em}
+.pkg-price{font-family:var(--font-hud);font-size:40px;font-weight:900;color:var(--plasma);text-shadow:0 0 20px var(--plasma-dim);line-height:1}
+.pkg-period{font-family:var(--font-data);font-size:11px;color:var(--white-ghost);margin-bottom:20px;margin-top:4px}
+.pkg-desc{font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:28px;font-weight:300;flex:1}
+.pkg-features{list-style:none;margin-bottom:32px;display:flex;flex-direction:column;gap:10px}
+.pkg-features li{font-family:var(--font-data);font-size:10px;letter-spacing:0.06em;color:var(--white-dim);display:flex;align-items:center;gap:10px;line-height:1.5}
+.pkg-features li::before{content:'';width:5px;height:5px;background:var(--plasma);border-radius:50%;flex-shrink:0}
+.pkg-btn{font-family:var(--font-hud);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:14px;background:transparent;border:1px solid var(--border-lit);color:var(--white-dim);text-decoration:none;text-align:center;transition:all 0.3s;display:block;position:relative;overflow:hidden;margin-top:auto}
+.pkg-btn::before{content:'';position:absolute;inset:0;background:var(--plasma);transform:translateY(101%);transition:transform 0.3s}
+.pkg-btn:hover{color:var(--void);border-color:var(--plasma)}
+.pkg-btn:hover::before{transform:translateY(0)}
+.pkg-btn span{position:relative;z-index:1}
+.pkg-btn.prime{background:var(--plasma);color:var(--void);border-color:var(--plasma)}
+.pkg-btn.prime::before{background:white}
+.pkg-btn.prime:hover{color:var(--void)}
+
+/* INDUSTRY OS */
+.os-bg{background:var(--abyss);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.os-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:64px}
+.os-card{background:var(--abyss);padding:36px 28px;position:relative;overflow:hidden;transition:background 0.3s;cursor:pointer;display:flex;flex-direction:column}
+.os-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--nova),var(--plasma));transform:scaleX(0);transition:transform 0.3s}
+.os-card:hover{background:var(--surface)}
+.os-card:hover::before{transform:scaleX(1)}
+.os-vertical{font-family:var(--font-data);font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--nova-bright);margin-bottom:16px}
+.os-name{font-family:var(--font-hud);font-size:16px;font-weight:700;color:var(--white);margin-bottom:10px;letter-spacing:0.04em;transition:color 0.3s;line-height:1.3}
+.os-card:hover .os-name{color:var(--plasma)}
+.os-desc{font-size:13px;color:var(--white-dim);line-height:1.6;font-weight:300;margin-bottom:20px;flex:1}
+.os-price{font-family:var(--font-hud);font-size:22px;font-weight:900;color:var(--plasma);margin-bottom:20px}
+.os-price span{font-family:var(--font-data);font-size:10px;color:var(--white-ghost)}
+.os-btn{font-family:var(--font-data);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 16px;border:1px solid var(--border-lit);color:var(--plasma-dim);text-decoration:none;text-align:center;transition:all 0.3s;display:block;margin-top:auto}
+.os-btn:hover{border-color:var(--plasma);color:var(--plasma);background:var(--plasma-trace)}
+
+/* PREMIUM PRODUCTS */
+.premium-bg{background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.premium-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-lit);margin-top:64px}
+.prem-card{background:var(--abyss);padding:52px 40px;position:relative;overflow:hidden;transition:background 0.4s;display:flex;flex-direction:column}
+.prem-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,var(--nova-glow),transparent 60%);opacity:0;transition:opacity 0.4s}
+.prem-card:hover{background:var(--surface)}
+.prem-card:hover::before{opacity:1}
+.prem-tag{font-family:var(--font-data);font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--nova-bright);border:1px solid rgba(124,58,255,0.3);padding:4px 12px;display:inline-block;margin-bottom:24px;width:fit-content}
+.prem-name{font-family:var(--font-hud);font-size:22px;font-weight:800;color:var(--white);margin-bottom:16px;letter-spacing:0.04em;line-height:1.2;transition:color 0.3s}
+.prem-card:hover .prem-name{color:var(--plasma)}
+.prem-desc{font-size:15px;color:var(--white-dim);line-height:1.7;font-weight:300;margin-bottom:32px;flex:1}
+.prem-pricing{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;padding:20px;background:var(--plasma-trace);border:1px solid var(--border-lit)}
+.prem-monthly{font-family:var(--font-hud);font-size:32px;font-weight:900;color:var(--plasma);text-shadow:0 0 20px var(--plasma-dim)}
+.prem-monthly span{font-size:12px;color:var(--white-ghost);font-weight:400}
+.prem-setup{font-family:var(--font-data);font-size:10px;color:var(--white-ghost);letter-spacing:0.1em}
+.prem-btn{font-family:var(--font-hud);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:16px;background:transparent;border:1px solid var(--nova-bright);color:var(--nova-bright);text-decoration:none;text-align:center;transition:all 0.3s;display:block;position:relative;overflow:hidden;margin-top:auto}
+.prem-btn::before{content:'';position:absolute;inset:0;background:var(--nova-bright);transform:translateY(101%);transition:transform 0.3s}
+.prem-btn:hover{color:var(--void)}
+.prem-btn:hover::before{transform:translateY(0)}
+.prem-btn span{position:relative;z-index:1}
+
+/* ADD-ONS */
+.addons-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);margin-top:64px}
+.addon-card{background:var(--abyss);padding:28px 20px;text-align:center;position:relative;overflow:hidden;transition:background 0.3s;display:flex;flex-direction:column;align-items:center}
+.addon-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ice),transparent);transform:scaleX(0);transition:transform 0.3s}
+.addon-card:hover{background:var(--surface)}
+.addon-card:hover::before{transform:scaleX(1)}
+.addon-name{font-family:var(--font-hud);font-size:12px;font-weight:600;color:var(--white);margin-bottom:12px;line-height:1.4;letter-spacing:0.03em}
+.addon-price{font-family:var(--font-data);font-size:20px;font-weight:700;color:var(--ice);text-shadow:0 0 12px rgba(0,212,255,0.4);margin-bottom:16px}
+.addon-price sub{font-size:9px;color:var(--white-ghost);letter-spacing:0.1em}
+.addon-btn{font-family:var(--font-data);font-size:8px;letter-spacing:0.2em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--border-lit);color:var(--white-ghost);text-decoration:none;transition:all 0.3s;margin-top:auto}
+.addon-btn:hover{border-color:var(--ice);color:var(--ice)}
+
 /* MARKETPLACE */
 .market-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);margin-top:64px}
-.market-card{background:var(--abyss);padding:28px 20px;text-align:center;position:relative;overflow:hidden;transition:background 0.3s}
+.market-card{background:var(--abyss);padding:28px 20px;text-align:center;position:relative;overflow:hidden;transition:background 0.3s;display:flex;flex-direction:column;align-items:center}
 .market-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--nova),var(--plasma));transform:scaleX(0);transition:transform 0.3s}
 .market-card:hover{background:var(--surface)}
 .market-card:hover::before{transform:scaleX(1)}
 .market-name{font-family:var(--font-hud);font-size:12px;font-weight:600;color:var(--white);margin-bottom:14px;line-height:1.4;letter-spacing:0.03em}
-.market-price{font-family:var(--font-data);font-size:20px;font-weight:700;color:var(--plasma);text-shadow:0 0 12px var(--plasma-dim)}
+.market-price{font-family:var(--font-data);font-size:20px;font-weight:700;color:var(--plasma);text-shadow:0 0 12px var(--plasma-dim);margin-bottom:16px}
 .market-price sub{font-size:9px;color:var(--white-ghost);letter-spacing:0.1em}
+.market-btn{font-family:var(--font-data);font-size:8px;letter-spacing:0.2em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--border-lit);color:var(--white-ghost);text-decoration:none;transition:all 0.3s;margin-top:auto}
+.market-btn:hover{border-color:var(--plasma);color:var(--plasma)}
+.bundles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:2px}
+.bundle-card{background:var(--surface);padding:28px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;transition:background 0.3s}
+.bundle-card:hover{background:var(--abyss)}
+.bundle-name{font-family:var(--font-hud);font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px}
+.bundle-price{font-family:var(--font-data);font-size:24px;font-weight:700;color:var(--nova-bright);margin-bottom:16px}
+.bundle-btn{font-family:var(--font-data);font-size:8px;letter-spacing:0.2em;text-transform:uppercase;padding:8px 14px;border:1px solid rgba(168,85,247,0.3);color:var(--nova-bright);text-decoration:none;transition:all 0.3s}
+.bundle-btn:hover{border-color:var(--nova-bright);background:var(--nova-glow)}
 
 /* NEWSLETTER */
 .nl-bg{background:var(--abyss);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
@@ -206,7 +298,12 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* RESPONSIVE */
-@media(max-width:1024px){.market-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){
+  .packages-grid,.os-grid{grid-template-columns:repeat(2,1fr)}
+  .market-grid,.addons-grid{grid-template-columns:repeat(2,1fr)}
+  .premium-grid{grid-template-columns:1fr}
+  .trust-inner{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:900px){
   nav{padding:0 24px}
   .nav-links{display:none}
@@ -214,10 +311,14 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
   .section-wrap{padding:80px 24px}
   .transform-grid,.contact-grid{grid-template-columns:1fr}
   .agents-grid{grid-template-columns:1fr 1fr}
-  .market-grid{grid-template-columns:repeat(2,1fr)}
+  .market-grid,.addons-grid{grid-template-columns:repeat(2,1fr)}
+  .packages-grid,.os-grid{grid-template-columns:1fr 1fr}
+  .bundles-grid{grid-template-columns:repeat(2,1fr)}
+  .trust-inner{grid-template-columns:repeat(2,1fr)}
   .hero-stats{flex-wrap:wrap}
   footer{padding:32px 24px}
   .footer-inner{flex-direction:column;gap:16px}
+  .trust-bar{padding:40px 24px}
 }
 </style>
 </head>
@@ -240,11 +341,13 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
   </a>
   <ul class="nav-links">
     <li><a href="#agents">Agents</a></li>
+    <li><a href="#packages">Plans</a></li>
+    <li><a href="#os">Industry OS</a></li>
     <li><a href="#marketplace">Marketplace</a></li>
     <li><a href="#newsletter">Brief</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00" target="_blank" class="nav-cta"><span>Book a Call</span></a>
+  <a href="https://calendly.com/nexvantaq/30min" target="_blank" class="nav-cta"><span>Book a Call</span></a>
 </nav>
 
 <!-- HERO -->
@@ -257,23 +360,49 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
   </h1>
   <p class="hero-sub">Nexvantaq deploys intelligent AI agents built specifically for your business. Book a free 20-minute strategy call to see what yours looks like.</p>
   <div class="hero-actions">
-    <a href="https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00" target="_blank" class="btn-prime"><span>See Your Business Automated</span></a>
+    <a href="https://calendly.com/nexvantaq/30min" target="_blank" class="btn-prime"><span>See Your Business Automated</span></a>
     <a href="#agents" class="btn-ghost">Explore the System</a>
   </div>
   <div class="hero-stats">
     <div class="hstat"><div class="hstat-n">9</div><div class="hstat-l">AI Agents</div></div>
-    <div class="hstat"><div class="hstat-n">9</div><div class="hstat-l">Industry Verticals</div></div>
+    <div class="hstat"><div class="hstat-n">8</div><div class="hstat-l">Industry OS</div></div>
     <div class="hstat"><div class="hstat-n">24/7</div><div class="hstat-l">Always Running</div></div>
     <div class="hstat"><div class="hstat-n">10</div><div class="hstat-l">Marketplace Agents</div></div>
-    <div class="hstat"><div class="hstat-n">3×</div><div class="hstat-l">Daily Newsletter</div></div>
+    <div class="hstat"><div class="hstat-n">9+</div><div class="hstat-l">Countries</div></div>
   </div>
 </section>
 
 <!-- DATA STREAM -->
 <div class="data-bar">
   <div class="data-stream">
-    <div class="data-item">System: <em>Online</em></div><div class="data-item">Agents Active: <em>9/9</em></div><div class="data-item">Leads Today: <em>247</em></div><div class="data-item">Posts Published: <em>35</em></div><div class="data-item">Proposals Sent: <em>12</em></div><div class="data-item">Countries: <em>9+</em></div><div class="data-item">Uptime: <em>99.97%</em></div><div class="data-item">Intelligence: <em>Active</em></div>
-    <div class="data-item">System: <em>Online</em></div><div class="data-item">Agents Active: <em>9/9</em></div><div class="data-item">Leads Today: <em>247</em></div><div class="data-item">Posts Published: <em>35</em></div><div class="data-item">Proposals Sent: <em>12</em></div><div class="data-item">Countries: <em>9+</em></div><div class="data-item">Uptime: <em>99.97%</em></div><div class="data-item">Intelligence: <em>Active</em></div>
+    <div class="data-item">System: <em>Online</em></div><div class="data-item">Agents Active: <em>9/9</em></div><div class="data-item">Leads Today: <em>247</em></div><div class="data-item">Posts Published: <em>35</em></div><div class="data-item">Proposals Sent: <em>12</em></div><div class="data-item">Countries: <em>9+</em></div><div class="data-item">Uptime: <em>99.97%</em></div><div class="data-item">SSL Secured: <em>Active</em></div><div class="data-item">Intelligence: <em>Active</em></div>
+    <div class="data-item">System: <em>Online</em></div><div class="data-item">Agents Active: <em>9/9</em></div><div class="data-item">Leads Today: <em>247</em></div><div class="data-item">Posts Published: <em>35</em></div><div class="data-item">Proposals Sent: <em>12</em></div><div class="data-item">Countries: <em>9+</em></div><div class="data-item">Uptime: <em>99.97%</em></div><div class="data-item">SSL Secured: <em>Active</em></div><div class="data-item">Intelligence: <em>Active</em></div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <div class="trust-title">Bank-Grade Security</div>
+      <div class="trust-desc">256-bit SSL encryption. Your data is protected at every layer.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🌍</div>
+      <div class="trust-title">International Operations</div>
+      <div class="trust-desc">Serving clients across US, UK, UAE, Australia, Canada, Singapore, Europe & Africa.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">⚡</div>
+      <div class="trust-title">99.97% Uptime</div>
+      <div class="trust-desc">Cloud-hosted on enterprise infrastructure. Your agents never sleep.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🏆</div>
+      <div class="trust-title">High Quality Guaranteed</div>
+      <div class="trust-desc">Every agent is tested, refined and built to deliver measurable results.</div>
+    </div>
   </div>
 </div>
 
@@ -324,23 +453,297 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
   </div>
 </section>
 
+<!-- PACKAGES -->
+<section class="section-wrap packages-bg reveal" id="packages">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">03 — Agency Plans</div></div>
+    <h2 class="sec-title">Simple pricing.<br><span class="hl">Unlimited potential.</span></h2>
+    <p class="sec-sub">Pick the plan that fits your business. Upgrade anytime. Cancel anytime. No contracts, no hidden fees.</p>
+    <div class="packages-grid">
+      <div class="pkg-card">
+        <div class="pkg-name">Core</div>
+        <div class="pkg-price">$250</div>
+        <div class="pkg-period">/month</div>
+        <div class="pkg-desc">The perfect entry point. Get your first 3 agents running and start seeing results from day one.</div>
+        <ul class="pkg-features">
+          <li>Command + Hunter + Publisher</li>
+          <li>20 leads found daily</li>
+          <li>Daily social content</li>
+          <li>3x daily newsletter</li>
+          <li>Email support</li>
+        </ul>
+        <a href="https://buy.stripe.com/cNi00bezif6abyvb2O7g40b" target="_blank" class="pkg-btn"><span>Get Started →</span></a>
+      </div>
+      <div class="pkg-card featured">
+        <div class="pkg-popular">Most Popular</div>
+        <div class="pkg-name">Growth</div>
+        <div class="pkg-price">$497</div>
+        <div class="pkg-period">/month</div>
+        <div class="pkg-desc">For businesses ready to scale. Full outreach, proposals, and content running on autopilot.</div>
+        <ul class="pkg-features">
+          <li>6 agents deployed</li>
+          <li>Automated proposals</li>
+          <li>Lead qualification</li>
+          <li>Weekly performance report</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="https://buy.stripe.com/8x26oz9eY5vAgSP3Am7g40a" target="_blank" class="pkg-btn prime"><span>Get Started →</span></a>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">Scale</div>
+        <div class="pkg-price">$997</div>
+        <div class="pkg-period">/month</div>
+        <div class="pkg-desc">All 9 agents. Full automation stack. Your business runs itself while you focus on growth.</div>
+        <ul class="pkg-features">
+          <li>All 9 agents active</li>
+          <li>Website building included</li>
+          <li>Full client onboarding</li>
+          <li>24/7 system monitoring</li>
+          <li>Dedicated Telegram support</li>
+        </ul>
+        <a href="https://buy.stripe.com/aFa28j9eY1fk7if1se7g40c" target="_blank" class="pkg-btn"><span>Get Started →</span></a>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">Enterprise</div>
+        <div class="pkg-price">$2,000</div>
+        <div class="pkg-period">/month</div>
+        <div class="pkg-desc">Full custom deployment. White-glove onboarding. Built around your exact operation at scale.</div>
+        <ul class="pkg-features">
+          <li>Custom agent configuration</li>
+          <li>Dedicated account manager</li>
+          <li>Custom integrations</li>
+          <li>Private infrastructure</li>
+          <li>Strategy calls included</li>
+        </ul>
+        <a href="https://buy.stripe.com/5kQ00b8aUe268mj2wi7g40d" target="_blank" class="pkg-btn"><span>Get Started →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY OS -->
+<section class="section-wrap os-bg reveal" id="os">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">04 — Industry OS</div></div>
+    <h2 class="sec-title">Your industry.<br><span class="hl">Fully automated.</span></h2>
+    <p class="sec-sub">A complete AI operating system built specifically for your vertical. Everything pre-configured. Deploy in 48 hours.</p>
+    <div class="os-grid">
+      <div class="os-card">
+        <div class="os-vertical">Healthcare</div>
+        <div class="os-name">Dental Clinic OS</div>
+        <div class="os-desc">Appointment booking, patient follow-ups, review generation, and lead capture — all automated.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/fZucMX4YI7DI9qngn87g40e" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Property</div>
+        <div class="os-name">Real Estate OS</div>
+        <div class="os-desc">Lead qualification, property content, buyer follow-up, and listing promotion on autopilot.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/28E14f62M3ns8mjdaW7g40f" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Fitness</div>
+        <div class="os-name">Gym OS</div>
+        <div class="os-desc">Member acquisition, class promotion, retention campaigns, and review building fully automated.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/bJe5kvbn6f6abyvc6S7g40g" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Beauty & Wellness</div>
+        <div class="os-name">Beauty Salon OS</div>
+        <div class="os-desc">Booking automation, client rebooking, seasonal promotions, and loyalty campaigns running 24/7.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/dRm5kv76QcY2fOLef07g40h" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Hospitality</div>
+        <div class="os-name">Restaurant OS</div>
+        <div class="os-desc">Reservation management, review responses, social content, and delivery platform presence automated.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/28EcMX8aUgaeeKH2wi7g40i" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Staffing</div>
+        <div class="os-name">Recruitment OS</div>
+        <div class="os-desc">Candidate outreach, job posting automation, client pipeline management, and follow-ups handled.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/6oUfZ962M5vA463ef07g40j" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Services</div>
+        <div class="os-name">Cleaning Company OS</div>
+        <div class="os-desc">Quote automation, client acquisition, review building, and recurring booking management on autopilot.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/7sY3cndve1fkcCzef07g40k" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+      <div class="os-card">
+        <div class="os-vertical">Accommodation</div>
+        <div class="os-name">Hotel OS</div>
+        <div class="os-desc">Guest communication, review management, direct booking campaigns, and upsell automation fully deployed.</div>
+        <div class="os-price">$997<span>/mo</span></div>
+        <a href="https://buy.stripe.com/28E8wH62M0bgcCzdaW7g40l" target="_blank" class="os-btn">Deploy Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIUM PRODUCTS -->
+<section class="section-wrap premium-bg reveal" id="premium">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">05 — Premium Intelligence</div></div>
+    <h2 class="sec-title">Beyond automation.<br><span class="hl">True AI advantage.</span></h2>
+    <p class="sec-sub">Three exclusive products that have never been offered to small businesses before. Built for owners who want to dominate.</p>
+    <div class="premium-grid">
+      <div class="prem-card">
+        <div class="prem-tag">Exclusive</div>
+        <div class="prem-name">AI Business Twin</div>
+        <div class="prem-desc">We build a complete AI version of you. It learns how you talk, how you make decisions, how you handle objections. Then it runs as you — replying to leads, negotiating, closing — while you sleep, travel, or focus elsewhere. Indistinguishable from the real owner.</div>
+        <div class="prem-pricing">
+          <div class="prem-monthly">$797<span>/month</span></div>
+          <div class="prem-setup">+ $997 one-time setup fee</div>
+        </div>
+        <a href="https://buy.stripe.com/14A3cnbn6f6a8mjgn87g40m" target="_blank" class="prem-btn"><span>Get Your Twin →</span></a>
+      </div>
+      <div class="prem-card">
+        <div class="prem-tag">Exclusive</div>
+        <div class="prem-name">AI Reputation Takeover</div>
+        <div class="prem-desc">We don't manage your reviews — we dominate your market. The agent monitors every competitor review, identifies gaps, then systematically builds your reputation to own the local search results. Competitors can't catch up because the system never stops.</div>
+        <div class="prem-pricing">
+          <div class="prem-monthly">$497<span>/month</span></div>
+          <div class="prem-setup">+ $497 one-time setup fee</div>
+        </div>
+        <a href="https://buy.stripe.com/5kQ00b62M7DI9qn4Eq7g40n" target="_blank" class="prem-btn"><span>Dominate Your Market →</span></a>
+      </div>
+      <div class="prem-card">
+        <div class="prem-tag">Exclusive</div>
+        <div class="prem-name">AI Silent Partner</div>
+        <div class="prem-desc">Every morning one decision lands in your inbox. Not a report. One move that grows your business today. The AI monitors your revenue, bookings, staff performance, and competitors daily — then tells you exactly what to do next. Pure signal, zero noise.</div>
+        <div class="prem-pricing">
+          <div class="prem-monthly">$1,497<span>/month</span></div>
+          <div class="prem-setup">+ $1,500 one-time setup fee</div>
+        </div>
+        <a href="https://buy.stripe.com/7sY6ozbn67DIcCz3Am7g40o" target="_blank" class="prem-btn"><span>Get Your Silent Partner →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section class="section-wrap reveal" id="addons">
+  <div class="section-inner">
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">06 — Power-Ups</div></div>
+    <h2 class="sec-title">Supercharge your plan.<br><span class="hl">Add what you need.</span></h2>
+    <p class="sec-sub">Bolt-on modules that plug into any existing plan. Add one or all — each one runs automatically every month.</p>
+    <div class="addons-grid">
+      <div class="addon-card">
+        <div class="addon-name">Voice AI</div>
+        <div class="addon-price">$99<sub>/mo</sub></div>
+        <a href="https://buy.stripe.com/dRm9ALdve5vA31Z1se7g40p" target="_blank" class="addon-btn">Add On →</a>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">WhatsApp</div>
+        <div class="addon-price">$49<sub>/mo</sub></div>
+        <a href="https://buy.stripe.com/fZufZ90IsbTYfOL0oa7g40q" target="_blank" class="addon-btn">Add On →</a>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Competitor Dashboard</div>
+        <div class="addon-price">$49<sub>/mo</sub></div>
+        <a href="https://buy.stripe.com/9B6bITdveaPU6eb4Eq7g40r" target="_blank" class="addon-btn">Add On →</a>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Email Nurture</div>
+        <div class="addon-price">$49<sub>/mo</sub></div>
+        <a href="https://buy.stripe.com/6oU7sDaj25vAgSP3Am7g40s" target="_blank" class="addon-btn">Add On →</a>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Multilingual</div>
+        <div class="addon-price">$99<sub>/mo</sub></div>
+        <a href="https://buy.stripe.com/28EfZ9aj2cY2fOLgn87g40t" target="_blank" class="addon-btn">Add On →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- MARKETPLACE -->
 <section class="section-wrap reveal" id="marketplace">
   <div class="section-inner">
-    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">03 — The Marketplace</div></div>
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">07 — The Marketplace</div></div>
     <h2 class="sec-title">Pre-built agents.<br><span class="hl">Deploy in minutes.</span></h2>
-    <p class="sec-sub">10 battle-tested agents ready to plug into your business today. One-time deployment, zero ongoing fees.</p>
+    <p class="sec-sub">10 battle-tested agents ready to plug into your business today. One-time purchase, zero ongoing fees. Buy individually or save with a bundle.</p>
     <div class="market-grid">
-      <div class="market-card"><div class="market-name">The Receptionist</div><div class="market-price">$197<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Review Builder</div><div class="market-price">$147<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Lead Chaser</div><div class="market-price">$197<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Content Machine</div><div class="market-price">$247<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Proposal Writer</div><div class="market-price">$147<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Onboarding Concierge</div><div class="market-price">$197<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Reputation Monitor</div><div class="market-price">$127<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Email Nurture Builder</div><div class="market-price">$197<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Appointment Setter</div><div class="market-price">$197<sub>one-time</sub></div></div>
-      <div class="market-card"><div class="market-name">The Win-Back Agent</div><div class="market-price">$147<sub>one-time</sub></div></div>
+      <div class="market-card">
+        <div class="market-name">The Receptionist</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/28EfZ9gHqf6a5a7gn87g40A" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Lead Chaser</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/cNiaEPezi9LQ6ebb2O7g40B" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Content Machine</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/8x2cMX1Mw6zE8mj3Am7g40C" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Proposal Writer</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/bJe8wH9eYbTYdGD6My7g40D" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Onboarding Concierge</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/fZu6ozcra2jo1XV2wi7g40E" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Reputation Monitor</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/14A9AL1Mwe261XV5Iu7g40F" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Appointment Setter</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/6oU3cnezi7DI7if7QC7g40G" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Review Builder</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/5kQ14fbn67DIaurb2O7g40u" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Email Nurture Builder</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/5kQ14fbn67DIaurb2O7g40u" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+      <div class="market-card">
+        <div class="market-name">The Win-Back Agent</div>
+        <div class="market-price">$97<sub> one-time</sub></div>
+        <a href="https://buy.stripe.com/5kQ14fbn67DIaurb2O7g40u" target="_blank" class="market-btn">Buy Now →</a>
+      </div>
+    </div>
+    <div class="bundles-grid">
+      <div class="bundle-card">
+        <div class="bundle-name">Single Agent</div>
+        <div class="bundle-price">$97</div>
+        <a href="https://buy.stripe.com/5kQ14fbn67DIaurb2O7g40u" target="_blank" class="bundle-btn">Buy →</a>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Any 3 Agents</div>
+        <div class="bundle-price">$247</div>
+        <a href="https://buy.stripe.com/14AdR10Is4rw1XV1se7g40v" target="_blank" class="bundle-btn">Buy Bundle →</a>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Any 5 Agents</div>
+        <div class="bundle-price">$397</div>
+        <a href="https://buy.stripe.com/3cIaEP62MbTYaur4Eq7g40w" target="_blank" class="bundle-btn">Buy Bundle →</a>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">All 10 Agents</div>
+        <div class="bundle-price">$697</div>
+        <a href="https://buy.stripe.com/5kQdR1aj28HMaurc6S7g40x" target="_blank" class="bundle-btn">Best Value →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -348,7 +751,7 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
 <!-- NEWSLETTER -->
 <section class="section-wrap nl-bg reveal" id="newsletter">
   <div class="nl-inner">
-    <div class="sec-eyebrow" style="justify-content:center"><div class="sec-line"></div><div class="sec-tag">04 — Daily Intelligence</div><div class="sec-line" style="transform:scaleX(-1)"></div></div>
+    <div class="sec-eyebrow" style="justify-content:center"><div class="sec-line"></div><div class="sec-tag">08 — Daily Intelligence</div><div class="sec-line" style="transform:scaleX(-1)"></div></div>
     <h2 class="sec-title" style="text-align:center">The <span class="hl">Nexvantaq Brief</span></h2>
     <p style="color:var(--white-dim);font-size:16px;line-height:1.7;margin-top:16px;font-weight:300;text-align:center">Three editions daily. Join business owners in 9 countries reading it every day.</p>
     <div class="nl-editions">
@@ -358,7 +761,7 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
     </div>
     <div class="nl-form">
       <input type="email" class="nl-input" placeholder="your@email.com" id="nl-email">
-      <button class="nl-btn" onclick="subscribeNewsletter()">Subscribe</button>
+      <button class="nl-btn" onclick="subscribeNewsletter()">Subscribe Free</button>
     </div>
   </div>
 </section>
@@ -366,7 +769,7 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
 <!-- CONTACT -->
 <section class="section-wrap reveal" id="contact">
   <div class="section-inner">
-    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">05 — Get In Touch</div></div>
+    <div class="sec-eyebrow"><div class="sec-line"></div><div class="sec-tag">09 — Get In Touch</div></div>
     <h2 class="sec-title">Ready to automate<br><span class="hl">your business?</span></h2>
     <div class="contact-grid">
       <div class="contact-info">
@@ -375,8 +778,12 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
           <a href="mailto:hello@nexvantaq.com" class="ci-value">hello@nexvantaq.com</a>
         </div>
         <div class="ci-item">
-          <div class="ci-label">Book a Strategy Call</div>
-          <a href="https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00" target="_blank" class="ci-value">Free 20-minute strategy call →</a>
+          <div class="ci-label">Book a Free Strategy Call</div>
+          <a href="https://calendly.com/nexvantaq/30min" target="_blank" class="ci-value">Free 20-minute strategy call →</a>
+        </div>
+        <div class="ci-item">
+          <div class="ci-label">Operating Internationally</div>
+          <div class="ci-value" style="font-size:13px;cursor:default;">US · UK · UAE · Australia · Canada · Singapore · South Africa · Europe</div>
         </div>
         <div class="ci-item">
           <div class="ci-label">Follow Us</div>
@@ -384,7 +791,7 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
             <a href="https://x.com/NEXVANTAQ" target="_blank" class="social-btn"><span>X</span></a>
             <a href="https://www.instagram.com/nexvantaq/" target="_blank" class="social-btn"><span>Instagram</span></a>
             <a href="https://www.tiktok.com/@nexvantaq" target="_blank" class="social-btn"><span>TikTok</span></a>
-            <a href="https://www.linkedin.com/feed" target="_blank" class="social-btn"><span>LinkedIn</span></a>
+            <a href="https://www.linkedin.com/company/nexvantaq" target="_blank" class="social-btn"><span>LinkedIn</span></a>
             <a href="https://www.youtube.com/@NEXVANTAQ" target="_blank" class="social-btn"><span>YouTube</span></a>
           </div>
         </div>
@@ -398,7 +805,7 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
           <label class="form-label">Business Type</label>
           <select class="form-ctrl">
             <option value="" disabled selected>Select your industry</option>
-            <option>Dental Clinic</option><option>Real Estate Agency</option><option>Gym / Fitness Studio</option><option>Beauty Salon / Spa</option><option>Restaurant / Hospitality</option><option>Mortgage Broker</option><option>Recruitment Agency</option><option>Cleaning Company</option><option>Hotel</option><option>Other</option>
+            <option>Dental Clinic</option><option>Real Estate Agency</option><option>Gym / Fitness Studio</option><option>Beauty Salon / Spa</option><option>Restaurant / Hospitality</option><option>Recruitment Agency</option><option>Cleaning Company</option><option>Hotel</option><option>Other</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">Message</label><textarea class="form-ctrl" placeholder="Tell us about your business and what you'd like to automate..."></textarea></div>
@@ -411,7 +818,7 @@ footer{background:var(--void);border-top:1px solid var(--border-lit);padding:40p
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-copy">© 2026 NEXVANTAQ · All rights reserved · AI automation agency operating internationally</div>
+    <div class="footer-copy">© 2026 NEXVANTAQ · All rights reserved · AI automation agency operating internationally · Secured with SSL</div>
     <ul class="footer-links">
       <li><a href="privacy-policy.html">Privacy Policy</a></li>
       <li><a href="cookie-policy.html">Cookie Policy</a></li>
@@ -491,10 +898,19 @@ const agObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isInterse
 const ag=document.querySelector('.agents-grid');if(ag)agObs.observe(ag);
 
 // NEWSLETTER
-function subscribeNewsletter(){const e=document.getElementById('nl-email').value;if(!e)return;window.open('https://nexvantaq.beehiiv.com/subscribe?email='+encodeURIComponent(e),'_blank')}
+function subscribeNewsletter(){
+  const e=document.getElementById('nl-email');
+  if(e&&e.value){
+    alert('Welcome to The Nexvantaq Brief! Check your inbox.');
+    e.value='';
+  }
+}
 
-// FORM
-function submitForm(e){e.preventDefault();window.location.href='https://calendly.com/nexvantaq/30min/2026-04-07T09:30:00-04:00'}
+// CONTACT FORM
+function submitForm(ev){
+  ev.preventDefault();
+  window.location.href='mailto:hello@nexvantaq.com?subject=Nexvantaq Enquiry&body=I would like to learn more about automating my business.';
+}
 </script>
 </body>
 </html>
